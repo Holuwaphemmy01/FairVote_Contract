@@ -9,6 +9,7 @@ module fairvote::initalize_vote {
         vote_counts: vector<u64>,
         voters_address: vector<address>,
         voters_name: vector<string::String>,
+        deadline: u64,
     }
 
 
@@ -33,5 +34,14 @@ module fairvote::initalize_vote {
             std::vector::push_back(&mut vote_counts, 0);
             index = index + 1
         }
+
+        let voting_session = Voting_Session{
+            id: objects::new(ctx),
+            options,
+            vote_counts,
+            voters_address,
+            voters_name,
+            deadline,
+        };
     }
 }
