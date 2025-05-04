@@ -17,7 +17,21 @@ module fairvote::initalize_vote {
         options: vector<string::String>,
         deadline: u64,
     ){
-        assert!(std::vector::length(&options) > 0, error::invalid_argument(0));
+        if (vector::length(&options) == 0) {
+            abort(0)
+        };
 
+        let now = tx_context::epoch_timestamp_ms(ctx);
+        if (deadline > now){
+            abort(0)
+        };
+
+        let mut vote_counts = std::vector::empty<u64>();
+        let mut index = 0;
+        let length = std::vector::length(&options);
+        while (index < length){
+            std::vector::push_back(&mut vote_counts, 0);
+            index = index + 1
+        }
     }
 }
